@@ -1,0 +1,101 @@
+---
+title: "Social Buzz Analysis"
+author: "Remy"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Brief
+A social media company would like an analysis of their content categories, highlighting the top 5 categories with the largest aggregate popularity. Additional insights into the data would be welcome.
+
+### Questions to Answer
+* What are the top 5 content categories?
+*Optional:*
+  * What content type receives the most engagement?
+  * What day of the week and time of day are users most active?
+  * What's the most popular reaction type?
+
+## Packages Used
+* tidyverse
+* DBI
+* RSQLite
+* forcats
+* ggplot2
+
+## Process
+### Load Packages
+I'll be using `DBI` and `RSQLite` to create an in-memory database to run SQL queries within RStudio, and `tidyverse` for my analysis in R.
+```{r install and load db packages, echo=TRUE, results='hide', message=F, warning=F}
+library(tidyverse)
+library(DBI)
+library(RSQLite)
+library(forcats)
+library(ggplot2)
+```
+
+### Read in the dataset
+I've done my initial cleaning and analysis in Google Sheets, then exported an aggregated csv file with only the relevant data to further explore using SQL and R. I'll import that file into a variable using `read.csv()`.
+```{r read in csv, echo=TRUE, results='hide', message=F, warning=F}
+buzz <- read.csv("social_buzz.csv")
+```
+
+### Create a database
+Using the `RSQLite` and `DBI` packages, I'll create an in-memory database that I can then query using SQL.
+```{r create in-memory dataframe, echo=TRUE, results='hide', message=F, warning=F}
+con <- dbConnect(RSQLite::SQLite(), dbname=":memory:")
+
+dbListTables(con)
+dbWriteTable(con, "content", buzz)
+dbListTables(con)
+```
+
+### SQL queries
+I'll use SQL to aggregate the category scores, then sort them and identify the top 5 most popular, which I'll save to a dataframe to be plotted in R.
+```{sql, connection=con, output.var="top_5"}
+SELECT
+  DISTINCT Category, SUM(Score) AS Score
+FROM 'content'
+GROUP BY Category
+ORDER BY Score DESC
+LIMIT 5
+```
+
+### Plot it out
+A bar chart makes the most sense to visualize the 5 most popular content categories. I'll first use `forcats` to create factor levels in the Category variable (so that they're not sorted alphabetically when plotting), then use `ggplot2` to create the bar chart.
+```{r}
+# create factor with Category using forcats
+top_5$Category <- fct_inorder(top_5$Category) %>% fct_rev()
+# lay down some bars, as the kids say
+ggplot(top_5)+
+  geom_col(mapping=aes(x=Score,y=Category), fill="purple")+
+  labs(title="Top 5 Content Categories")
+```
+
+## Conclusion
+I found that the most popular content categories, in descending order are:
+* Animals
+* Science
+* Healthy Eating
+* Technology
+* Food
+
+## Reflections
+While the size and relative simplicity of this dataset makes it perfectly manageable to perform analysis in a spreadsheet, I wanted to challenge myself to use R and SQL to reinforce what I've learned. I added a new tool to my kit with `forcats`. I knew it existed prior to this analysis, but this is the first time I've used it, and it worked exactly as expected. *AND* it has "cats" in the name, so automatic 5-stars.
+
+#### Sources
+These are all the sites I referred to while building this analysis, broken down by package pages used for general reference, and results of research into how to perform a particular function.
+
+##### General Reference Pages
+* [ggplot2](https://ggplot2.tidyverse.org/)
+* [Using DBI](https://solutions.posit.co/connections/db/r-packages/dbi/)
+* [Database Queries With R](https://solutions.posit.co/connections/db/getting-started/database-queries/#query-using-an-r-notebooks)
+* [Original Analysis using Google Sheets](https://docs.google.com/spreadsheets/d/e/2PACX-1vQoaHCkvCZXlHuPHrY3_53si1Zl1pLofeLB4MqFZWuYl7AXKwcpieSrtfFM7pt7ySc3KJhXLETybYd5/pubhtml)
+
+##### Specific Questions
+* [How to keep the order of a variable in my dataframe when plotting in ggplot2](https://stackoverflow.com/questions/26469612/how-do-i-set-factor-levels-to-the-order-they-appear-in-a-data-frame)
