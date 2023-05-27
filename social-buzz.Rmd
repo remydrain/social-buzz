@@ -59,10 +59,44 @@ After taking one more pass over the sheets to make sure they were sufficiently c
 
 ![Cleaned, aggregated, and ready for analysis](images/04-clean-agg.jpg)
 
-### Identifying Key Variables
+### Identify the Top 5
 The primary objective was to get the top 5 most popular content categories, as measured by the total reaction score. In order to do this, I first needed to identify all the categories, which I did using the UNIQUE function pointing to the range of Content Categories. Then I used SUMIF to get the total score of each category, and sorted descending by score to get all the categories with their total scores, in order from most popular to least.
 
 ![Categories, ranked from highest to lowest score](images/05-ranked-categories.jpg)
+
+We can see from this that the top 5 content categories, in order, are:
+
+* Animals
+* Science
+* Healthy Eating
+* Technology
+* Food
+
+#### Visualize It
+To make that look a little more interesting, I put it into a bar chart with just the top 5.
+
+![Top 5 Content Categories](images/06-top5.svg)
+
+### Most Engaging Content Type
+Now that I had the main objective done, I could explore the data further with my own questions, starting with what *type* of content had the most engagement. I again pulled in the different content types into a blank sheet, then used COUNTIF to tally the number of engagements for each type.
+
+![Engagement Level for Each Content Type](images/07-content-type-engagement.svg)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
