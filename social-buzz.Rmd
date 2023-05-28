@@ -72,7 +72,6 @@ We can see from this that the top 5 content categories, in order, are:
 * Technology
 * Food
 
-#### Visualize It
 To make that look a little more interesting, I put it into a bar chart with just the top 5.
 
 ![Top 5 Content Categories](images/06-top5.svg)
