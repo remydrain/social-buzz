@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Brief
 A social media company would like an analysis of their content categories, highlighting the top 5 categories with the largest aggregate popularity. Additional insights into the data would be welcome.
 
-### Questions to Answer
+## Questions to Answer
 * What are the top 5 content categories?
 * What content type receives the most engagement?
 * What day of the week and time of day are users most active?
@@ -77,7 +77,7 @@ To make that look a little more interesting, I put it into a bar chart with just
 ![Top 5 Content Categories](images/06-top5.svg)
 
 ### Most Engaging Content Type
-Now that I had the main objective done, I could explore the data further with my own questions, starting with what *type* of content had the most engagement. I again pulled in the different content types into a blank sheet, then used COUNTIF to tally the number of engagements for each type.
+Now that I had the main objective done, I could explore the data further with my own questions, starting with what *type* of content had the most engagement. I measured engagement by the number of reactions — of any sentiment — each particular type of content received. I again pulled in the different content types into a blank sheet, then used COUNTIF to tally the number of engagements for each type.
 
 ![Engagement Level for Each Content Type](images/07-content-type-engagement.svg)
 
@@ -97,5 +97,9 @@ Now that I had the main objective done, I could explore the data further with my
 
 
 
+## Conclusions
 
-
+* What are the top 5 content categories?
+* What content type receives the most engagement?
+* What day of the week and time of day are users most active?
+* What's the most popular reaction type?
