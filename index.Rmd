@@ -17,8 +17,8 @@ A social media company would like an analysis of their content categories, highl
 
 ## Questions to Answer
 * What are the top 5 content categories?
-* What content type receives the most engagement?
-* What day of the week and time of day are users most active?
+* What *type* of content (photo, video, GIF, audio) receives the most engagement?
+* When are users most active?
 * What's the most popular reaction type?
 
 ## About the data
@@ -77,29 +77,33 @@ To make that look a little more interesting, I put it into a bar chart with just
 ![Top 5 Content Categories](images/06-top5.svg)
 
 ### Most Engaging Content Type
-Now that I had the main objective done, I could explore the data further with my own questions, starting with what *type* of content had the most engagement. I measured engagement by the number of reactions — of any sentiment — each particular type of content received. I again pulled in the different content types into a blank sheet, then used COUNTIF to tally the number of engagements for each type.
+Now that I had the main objective done, I could explore the data further with my own questions, starting with what *type* of content had the most engagement. I measured engagement by the number of reactions — of any sentiment — each particular type of content received, divided by the number of such type posted (aka, the average number of reactions for each content type). I again pulled in the different content types into a blank sheet, then used COUNTIF to tally the number of engagements for each type, and COUNTUNIQUEIFS to tally the number of each content type.
 
-![Engagement Level for Each Content Type](images/07-content-type-engagement.svg)
+![Engagement Level for Each Content Type](images/07_content-type-engagement.svg)
 
+### Engagement Trends Over Time
+To see when people were most active on the site, I created a pivot table showing the total number of interactions by day of the week and hour of the day, divided by the number of days in the year that weekday occurred. I then plotted them using a radar chart, as it seemed to capture the activity by time of day well.
 
+![Average Engagement](images/08_average-engagement.svg)
 
+### Reaction Types, Ranked
+Finally, I wanted to see which types of reactions people used the most. I again used UNIQUE and COUNTIF to get the number of times each reaction was used, and found that they're all used a relatively similar amount.
 
-
-
-
-
-
-
-
-
-
-
-
-
+![Reaction Types Used](images/09_reaction-types.svg)
 
 ## Conclusions
+To recap my findings:
 
-* What are the top 5 content categories?
-* What content type receives the most engagement?
-* What day of the week and time of day are users most active?
-* What's the most popular reaction type?
+* The top 5 most popular content categories, in order, are Animals, Science, Healthy Eating, Technology, and Food.
+* The numbers were close, but GIFs reign supreme on average number of reactions, followed by photos, videos, and audio bringing up the rear.
+* Mondays see the highest average engagement, with Sunday and Tuesday close behind. Users also appear to engage more in the morning from 6-9, and late in the evening, around 11pm (23h).
+* Finally, the reaction types that people use are all relatively close in frequency, with the frontrunner being the Heart reaction.
+
+You can see the charts all together in a Dashboard here: [Social Buzz Analysis](https://docs.google.com/spreadsheets/d/e/2PACX-1vQlYslstR4W85d0dPqsngWEyDLB1A3vd99ueIOO5NG2OUlkjv4_iyHg7yOZ7OVqQXCSnSZqRLQzU3OC/pubhtml?gid=901893221&single=true)
+
+I also redid my analysis of the original question using R and SQL in RStudio, which you can read about here: [Social Buzz Analysis - RStudio](/analysis_social-buzz.html)
+
+
+
+Remy Drain 2023 | [Portfolio](https://remydrain.github.io) | [LinkedIn](https://www.linkedin.com/in/remydrain) | [GitHub](https://www.github.com/remydrain)
+
